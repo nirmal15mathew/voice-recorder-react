@@ -152,9 +152,8 @@ const AudioRecorder: React.FC<RecorderProps> = ({onStop}) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-100 flex flex-col items-center justify-center space-y-6 px-4 dark:bg-zinc-800">
+    <div className="min-h-screen bg-zinc-100 flex flex-col items-center justify-center space-y-6 px-4 dark:bg-zinc-900">
       {toast}
-      <h1 className="text-2xl font-semibold">Audio Recorder</h1>
       <div className="flex items-center justify-center gap-4">
         {!recording && (
           <motion.button

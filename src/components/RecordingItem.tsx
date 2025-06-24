@@ -10,10 +10,11 @@ interface RecordingItemProps {
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined) => void;
   selected?: boolean;
   onDelete: (url: string) => void;
+  setRenameDialog: ({url, name}: {url: string, name: string}) => void;
 }
 
 
-export function RecordingItem({ recording, onDelete, selected, onClick }: RecordingItemProps) {
+export function RecordingItem({ recording, onDelete, selected, onClick, setRenameDialog }: RecordingItemProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const { openMenu, menu } = useContextMenu();
@@ -47,7 +48,7 @@ export function RecordingItem({ recording, onDelete, selected, onClick }: Record
             ]);
           }
         }}
-        className={`p-4 rounded-lg shadow bg-white dark:bg-zinc-800 flex items-center justify-between border ${selected ? 'border-red-500' : 'border-transparent'}`}
+        className={`p-4 rounded-lg shadow  flex items-center justify-between border ${selected ? 'border-red-500' : 'border-transparent'}`}
 
       >
         <audio
@@ -59,7 +60,13 @@ export function RecordingItem({ recording, onDelete, selected, onClick }: Record
           className="hidden"
         />
         <div className="flex-1 mr-4">
-        <p className="font-medium text-zinc-800 dark:text-zinc-100 truncate">{recording.name}</p>
+        <p
+  onClick={() => setRenameDialog({ name: recording.name, url: recording.url })}
+  className="font-medium text-zinc-800 dark:text-zinc-100 truncate cursor-pointer hover:underline"
+>
+  {recording.name}
+</p>
+
         <p className="text-xs text-zinc-500 dark:text-zinc-400">{recording.createdAt.toLocaleString()}</p>
       </div>
         <button

@@ -3,11 +3,20 @@ import { useRecordingContext } from "../context/RecordingContext";
 import { RecordingItem } from "../components/RecordingItem";
 import { SelectionBar } from "../components/SelectionBar";
 import { AnimatePresence, motion } from "framer-motion";
-
+import { RenameRecordingDialog } from "../components/RenameRecordingDialog";
 
 export default function RecordingsPage() {
-  const { recordings, removeRecording } = useRecordingContext();
+  const { recordings, removeRecording, renameRecording } = useRecordingContext();
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [search, setSearch] = useState('');
+  const [renameDialog, setRenameDialog] = useState<{
+    name: string;
+    url: string;
+  } | null>(null);
+
+  const filtered = recordings.filter((r) =>
+  r.name.toLowerCase().includes(search.toLowerCase())
+);
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -48,6 +57,15 @@ export default function RecordingsPage() {
     </motion.h1>
   )}
 </AnimatePresence>
+<input
+  type="text"
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  placeholder="Search recordings..."
+  className="w-full px-4 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-600 shadow-sm transition"
+/>
+
+
 
 
       {recordings.length === 0 ? (
@@ -56,7 +74,7 @@ export default function RecordingsPage() {
         </p>
       ) : (
         <ul className="space-y-4">
-          {recordings.map((r, i) => (
+          {filtered.map((r, i) => (
             <li key={i}>
               <RecordingItem
                 recording={r}
@@ -66,11 +84,23 @@ export default function RecordingsPage() {
                   console.log(isMobile);
                   if (isMobile) toggleSelection(r.url);
                 }}
+                setRenameDialog={setRenameDialog}
               />
             </li>
           ))}
         </ul>
       )}
+      {renameDialog && (
+  <RenameRecordingDialog
+    currentName={renameDialog.name}
+    onRename={(newName) => {
+      renameRecording(renameDialog.url, newName);
+      setRenameDialog(null);
+    }}
+    onCancel={() => setRenameDialog(null)}
+  />
+)}
+
     </div>
   );
 }
