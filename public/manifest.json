@@ -1,0 +1,35 @@
+{
+  "name": "Audio Recorder App",
+  "short_name": "Recorder",
+  "description": "A simple offline audio recorder",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ef4444",
+  "orientation": "portrait",
+  "id": "/?mode=app",
+  "icons": [
+    {
+      "src": "/favicon/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+        "src": "/favicon/image.png",
+        "form_factor": "wide",
+        "sizes": "1046x608"
+    },
+    {
+        "src": "/favicon/mobile-screenshot.png",
+        "form_factor": "narrow",
+        "sizes": "1082x2402"
+    }
+  ]
+}
