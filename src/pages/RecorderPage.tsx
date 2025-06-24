@@ -9,6 +9,8 @@ export default function RecorderPage() {
   const [pendingBlob, setPendingBlob] = useState<Blob | null>(null);
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
+  pendingBlob?.size
+
   const handleRecordingStop = (blob: Blob) => {
     const url = URL.createObjectURL(blob);
     setObjectUrl(url);
